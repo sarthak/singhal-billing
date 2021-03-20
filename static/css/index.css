@@ -1,0 +1,21 @@
+.title {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+#ribbon {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: 1em;
+}
+
+#bill-metadata {
+  display:  flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 1em;
+}
