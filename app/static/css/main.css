@@ -1,0 +1,42 @@
+body > nav {
+  text-align: center;
+}
+
+body > nav > a {
+  padding: 2px;
+  margin: 2px;
+}
+
+body > nav > a:hover {
+  background-color: blue;
+  color:  white;
+}
+
+.numeric {
+  width: 4em;
+}
+
+table {
+  border-collapse: collapse;
+  width:  100%;
+}
+
+td, th {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+@media print {
+  .dont-print {
+	display: none !important;
+  }
+  body{
+    -webkit-print-color-adjust: exact; /*chrome & webkit browsers*/
+    color-adjust: exact; /*firefox & IE */
+  } 
+}

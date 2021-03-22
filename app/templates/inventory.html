@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Singhal Billing</title>
+  <meta name="description" content="Billing System">
+  <meta name="author" content="Sarthak">
+  <link rel="stylesheet" href="{{css}}/main.css">
+  <link rel="stylesheet" href="{{css}}/inventory.css">
+
+  <script src="{{js}}/inventory.js" defer></script>
+</head>
+
+<body>
+  <nav>
+    <a href="/billing">Billing</a>
+    <a href="/inventory">Inventory</a>
+    <a href="/bills"</a>All Bills</a>
+  </nav>
+  <div id="ribbon">
+    <button id="save-button">Save Changes</button>
+    <button disabled>Create Backup</button>
+  </div>
+  <div id="add-new">
+    <label>Name: </label>
+    <input type="text"/>
+    <label>Price: &#x20B9;</label>
+    <input class="numeric" type="number" min="0" step="0.1"/>
+    <label>Discount (%):</label>
+    <input class="numeric" type="number" min="0" max="100" step="0.01"/>
+    <button>Add this item</button>
+  </div>
+  
+  <table id="inventory-table">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Discount</th>
+    </tr>
+  </table>
+</body>
+
+<template id="row-template">
+  <tr>
+	<td><input name="product_name" type="text" disabled/></td>
+	<td>&#x20B9; <input name="product_price" class="numeric" type="number" min="0" step="0.1"/></td>
+	<td><input name="product_discount" class="numeric" type="number" min="0" max="100" step="0.01"/> %</td>
+	<td><input name="product_delete" type="button" value="Remove"/></td>
+  </tr>
+</template>
+</html>
