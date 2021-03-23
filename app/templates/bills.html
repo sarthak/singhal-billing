@@ -1,0 +1,137 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<title>Singhal Billing</title>
+	<meta name="description" content="Billing System">
+	<meta name="author" content="Sarthak">
+	<link rel="stylesheet" href="{{css}}/main.css">
+	<link rel="stylesheet" href="{{css}}/bills.css">
+	<script src="{{js}}/bills.js" defer></script>
+  </head>
+
+  <body>
+	<nav class="dont-print">
+	  <a href="/billing">Billing</a>
+	  <a href="/inventory">Inventory</a>
+	  <a href="/bills"</a>All Bills</a>
+	</nav>
+	<div class="filter-criteria">
+	  <p>Filter bills by ...</p>
+	  <table class="mini-table">
+		<tbody>
+		  <tr>
+			<td>
+			  <input type="checkbox" id="billno-checkbox" name="billno-checkbox"/>
+			  <label for="billno-checkbox">Bill No. </label>
+			</td>
+			<td>
+			  <input type="numeric" name="billno"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="date-checkbox" name="date-checkbox"/>
+			  <label for="date-checkbox">Date </label>
+			</td>
+			<td>
+			  <input type="date" name="date"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="datefrom-checkbox" name="datefrom-checkbox"/>
+			  <label for="datefrom-checkbox">Date From </label>
+			</td>
+			<td>
+			  <input type="date" name="datefrom"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="dateto-checkbox" name="dateto-checkbox"/>
+			  <label for="dateto-checkbox">Date To </label>
+			</td>
+			<td>
+			  <input type="date" name="dateto"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="customername-checkbox" name="customername-checkbox"/>
+			  <label for="customername-checkbox">Customer name </label>
+			</td>
+			<td>
+			  <input type="text" name="customername"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="customernumber-checkbox" name="customernumber-checkbox"/>
+			  <label for="customernumber-checkbox">Customer number </label>
+			</td>
+			<td>
+			  <input type="text" name="customernumber"/>
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>
+			  <input type="checkbox" id="totalgreater-checkbox" name="totalgreater-checkbox"/>
+			  <label for="totalgreater-checkbox">Total greater than</label>
+			</td>
+			<td>
+			  <input type="numeric" name="totalgreater"/>
+			</td>
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
+
+	<div class="order-criteria">
+	  <label>Order bills by ... </label>
+	  <select name="orderby" id="orderby">
+		<option selected>Bill No.</option>
+		<option>Date Time</option>
+		<option>Customer Name</option>
+		<option>Total</option>
+	  </select>
+	  <select name="orderasc" id="orderasc">
+		<option>Ascending</option>
+		<option selected>Descending</option>
+	  </select>
+	</div>
+
+	<input type="button" name="search-button" id="search-button"
+	value="Search"/>
+
+	<hr/>
+
+	<p>Number of bills displayed : <span id="number-bills"></span></p>
+	<table class="main-table" id="results-table">
+	  <tr id="table-header">
+		<th>Bill No.</th>
+		<th>Date</th>
+		<th>Name</th>
+		<th>Mobile</th>
+		<th>Total (&#x20B9;)</th>
+	  </tr>
+	</table>
+
+  </body>
+  <template id="row-template">
+	<tr>
+	  <td><a target="_noblank"></a></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	</tr>
+  </template>
+</html>
