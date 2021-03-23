@@ -1,5 +1,4 @@
 import flask
-import sys
 from . import dbutils
 
 inventory_bp = flask.Blueprint('inventory', __name__)
@@ -50,9 +49,10 @@ def save_changes():
                  inserted['discount']))
 
         for deleted in req['deleted']:
+            print(deleted)
             curr.execute(
                 'delete from inventory where name=?',
-                deleted['name'])
+                (deleted['name'],))
 
         conn.commit()
 
