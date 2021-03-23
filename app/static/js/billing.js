@@ -1,8 +1,12 @@
 const billing_table = document.querySelector('#billing-table');
 const row_template = document.querySelector('#row-template');
-const total_row = document.querySelector('#total-row');
-const addnew_button = total_row.children.item(1).firstElementChild;
-const total_td = total_row.children.item(6);
+const subtotal_row = document.querySelector('#subtotal-row');
+const addnew_button = subtotal_row.children.item(0).firstElementChild;
+const subtotal_td = subtotal_row.children.item(2);
+const extradiscount_field = document.querySelector('#extradiscount-field');
+const freightcharges_field = document.querySelector('#freightcharges-field');
+const extracharges_field = document.querySelector('#extracharges-field');
+const total_td = document.querySelector('#finaltotal-field');
 const products_datalist = document.querySelector('#products-available');
 const newbill_button = document.querySelector('#newbill-button');
 const clearbill_button = document.querySelector('#clearbill-button');
@@ -55,16 +59,19 @@ function checkQty(qty) {
 }
 
 function updateTotal () {
-  let total = 0.0;
+  let subtotal = 0.0;
   for (let i=0; i<purchases.length; i++) {
-	total += purchases[i].total;
+	subtotal += purchases[i].total;
   }
-  total_td.textContent = total;
+  subtotal_td.textContent = subtotal;
+  let afterdiscount = subtotal * (100 - +extradiscount_field.value)/100;
+  let grandtotal = afterdiscount + +freightcharges_field.value + +extracharges_field.value;
+  total_td.textContent = grandtotal;
 }
 
 function clearBill() {
   for (let i=0; i<purchases.length; i++) {
-	total_row.previousSibling.remove();
+	subtotal_row.previousSibling.remove();
   }
   purchases.length = 0;
   updateTotal();
@@ -162,7 +169,7 @@ function addNewPurchaseRow(sn, purchase) {
   row.setAttribute('sno', sn);
   row.addEventListener('click', removeRow);
   row.addEventListener('change', rowChanged);
-  total_row.before(row);
+  subtotal_row.before(row);
 }
 
 function newPurchase() {
@@ -170,6 +177,28 @@ function newPurchase() {
   let purchase = new Purchase();
   addNewPurchaseRow(sno, purchase);
   purchases.push(purchase);
+}
+
+function setupChargesCalc() {
+  extradiscount_field.addEventListener('change',
+	() => {
+	  if (checkDiscount(extradiscount_field.value))
+		updateTotal();
+	});
+  freightcharges_field.addEventListener('change',
+	() => {
+	  if (checkPrice(freightcharges_field.value))
+		updateTotal();
+	});
+  extracharges_field.addEventListener('change',
+	() => {
+	  if (checkPrice(extracharges_field.value))
+		updateTotal();
+	});
+}
+
+function toIndianDate(date) {
+  return `${date.getDate()} / ${date.getMonth()+1} / ${date.getFullYear()}`;
 }
 
 function setupPage(productList) {
@@ -184,11 +213,12 @@ function setupPage(productList) {
   addnew_button.addEventListener('click', newPurchase);
   newPurchase();
 
+  setupChargesCalc();
+
   newbill_button.addEventListener('click', clearBill);
   clearbill_button.addEventListener('click', clearBill);
 
-  document.querySelector('#date-label').textContent = 
-	(new Date()).toISOString().substring(0, 10);
+  document.querySelector('#date-label').value = toIndianDate(new Date());
 }
 
 fetch('/inventory/api/list').then(

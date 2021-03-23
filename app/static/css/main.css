@@ -16,18 +16,16 @@ body > nav > a:hover {
   width: 5em;
 }
 
-table {
+.main-table {
   border-collapse: collapse;
   width:  100%;
 }
 
-td, th {
+.main-table td, th {
   border: 1px solid black;
-  text-align: left;
-  padding: 8px;
 }
 
-tr:nth-child(even) {
+.main-table tr:nth-child(even) {
   background-color: #dddddd;
 }
 

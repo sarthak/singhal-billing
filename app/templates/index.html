@@ -18,28 +18,52 @@
 	  <a href="/inventory">Inventory</a>
 	  <a href="/bills"</a>All Bills</a>
 	</nav>
-	<h1 class="title">Singhal Enterprises</h1>
-	<h3 class="subtitle">Behind Town Hall, Datia - 475661</h3>
+	<div class="bill-header">
+	  <div class="left-pane">
+		<p>Billing Information</p>
+		<table class="mini-table">
+		  <tbody>
+			<tr>
+			  <td>Bill No.</td>
+			  <td><input type="numeric" class="numeric" disabled/></td>
+			</tr>
+			<tr>
+			  <td>Date</td>
+			  <td><input id="date-label" type="text" disabled/></td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+
+	  <div class="center-pane">
+		<h2>Singhal Enterprises</h2>
+		<p>Behind Town Hall, Datia - 475661</p>
+		<h3>Provisional Bill</h3>
+	  </div>
+
+	  <div class="right-pane">
+		<p>Customer Information</p>
+		<table class="mini-table">
+		  <tbody>
+			<tr>
+			  <td>Name</td>
+			  <td><input type="text"/></td>
+			</tr>
+			<tr>
+			  <td>Mobile</td>
+			  <td><input type="text"/></td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+
 	<div id="ribbon" class="dont-print">
 	  <button id="newbill-button">New Bill</button>
 	  <button id="clearbill-button">Clear Bill</button>
 	  <button disabled>Save Bill</button>
 	</div>
-	<div id="bill-metadata">
-	  <div>
-		<label>Bill No.</label>
-		<label>1</label>
-	  </div>
-	  <div>
-		<label>Date </label>
-		<label id="date-label">20/03/2021</label>
-	  </div>
-	  <div>
-		<label>Name: </label>
-		<input type="text"/>
-	  </div>
-	</div>
-	<table id="billing-table">
+	<table class="main-table" id="billing-table">
 	  <tr>
 		<th>S. No.</th>
 		<th>Item Name</th>
@@ -49,14 +73,29 @@
 		<th>Qty</th>
 		<th>Total (&#x20B9;)</th>
 	  </tr>
-	  <tr id="total-row">
+	  <tr id="subtotal-row" class="sub-row">
+		<td colspan=5><input type="button" value="Add New" class="dont-print"/></td>
+		<td>Sub-Total &#x20B9;</td>
 		<td></td>
-		<td><input type="button" value="Add New"/></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>Total &#x20B9;</td>
-		<td></td>
+	  </tr>
+	  <tr class="sub-row">
+		<td colspan=6>Extra Discount %</td>
+		<td><input id="extradiscount-field" type="numeric"
+		  class="numeric" min="0" max="100" value="0"/></td>
+	  </tr>
+	  <tr class="sub-row">
+		<td colspan=6>Freight Charges &#x20B9;</td>
+		<td><input id="freightcharges-field" type="numeric"
+		  class="numeric" min="0" value="0"/></td>
+	  </tr>
+	  <tr class="sub-row">
+		<td colspan=6>Other Charges &#x20B9;</td>
+		<td><input id="extracharges-field" type="numeric"
+		  class="numeric" min="0" value="0"/></td>
+	  </tr>
+	  <tr class="sub-row">
+		<td colspan=6>Total &#x20B9;</td>
+		<td id="finaltotal-field"></td>
 	  </tr>
 	</table>
 	<datalist id="products-available">
