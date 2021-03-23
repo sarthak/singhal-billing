@@ -16,6 +16,8 @@ def create_app():
 
     @app.errorhandler(404)
     def error(e):
-        return "OOPS!"
+        return {
+            'errormsg': 'Not Found'
+        }, 404
 
     return app

@@ -25,7 +25,7 @@
 		  <tbody>
 			<tr>
 			  <td>Bill No.</td>
-			  <td><input type="numeric" class="numeric" disabled/></td>
+			  <td><input id="billno-field" type="numeric" class="numeric" disabled/></td>
 			</tr>
 			<tr>
 			  <td>Date</td>
@@ -47,11 +47,11 @@
 		  <tbody>
 			<tr>
 			  <td>Name</td>
-			  <td><input type="text"/></td>
+			  <td><input id="customername-field" type="text"/></td>
 			</tr>
 			<tr>
 			  <td>Mobile</td>
-			  <td><input type="text"/></td>
+			  <td><input id="customermobile-field" type="text"/></td>
 			</tr>
 		  </tbody>
 		</table>
@@ -61,7 +61,7 @@
 	<div id="ribbon" class="dont-print">
 	  <button id="newbill-button">New Bill</button>
 	  <button id="clearbill-button">Clear Bill</button>
-	  <button disabled>Save Bill</button>
+	  <button id="savebill-button">Save Bill</button>
 	</div>
 	<table class="main-table" id="billing-table">
 	  <tr>

@@ -10,21 +10,25 @@ create table inventory (
 
 create table bills (
   bill_id int primary key,
-  customer text,
-  date text
+  customer_name text,
+  customer_mobile text,
+  date text,
+  extradiscount real,
+  freightcharges real,
+  extracharges real,
+  total real
 );
 
 create table bills_data (
   bill_id int references bills(bill_id),
-  product text,
-  base_price real,
+  name text,
+  price real,
   discount real,
   qty int
 );
 
 insert into inventory values
-  ('a', 120.0, 5.0),
-  ('b', 180.0, 15),
-  ('c', 35.0, 20),
-  ('d', 560.0, 4)
+  ('elbow', 120.0, 5.0),
+  ('tee', 180.0, 15),
+  ('socket', 35.0, 20)
 ;
