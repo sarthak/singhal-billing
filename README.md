@@ -28,6 +28,7 @@ Here `python` is alias for `python3` >= 3.7
 python -m venv env/
 source env/bin/activate  <-- this line will be different on windows/mac
 python -m pip install flask waitress
+mkdir db/ && python utils/dbinit.py
 ```
 
 Finally the server can be started by either the `debug.sh` script which starts a flask-development server,
