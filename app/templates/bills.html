@@ -113,10 +113,12 @@
 
 	<hr/>
 
-	<p>Number of bills displayed : <span id="number-bills"></span></p>
+	<p>Number of bills displayed : <span id="number-bills"></span> <input
+										 type="button" name="delete-selected"
+										 value="Delete Selected Bills"/></p>
 	<table class="main-table" id="results-table">
 	  <tr id="table-header">
-		<th>Bill No.</th>
+		<th><input type="checkbox"/> Bill No.</th>
 		<th>Date</th>
 		<th>Name</th>
 		<th>Mobile</th>
@@ -127,7 +129,7 @@
   </body>
   <template id="row-template">
 	<tr>
-	  <td><a target="_noblank"></a></td>
+	  <td><input type="checkbox"/> <a target="_noblank"></a></td>
 	  <td></td>
 	  <td></td>
 	  <td></td>

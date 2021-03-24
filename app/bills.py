@@ -53,3 +53,70 @@ def search():
     finally:
         cur.close()
         conn.close()
+
+@bills_bp.route('/api/bill/<billno>')
+def get_bill(billno):
+    bill = {}
+    conn = dbutils.connect_db()
+    try:
+        cur = conn.execute('select * from bills '
+                'where bill_id=?;', (billno,))
+        row = cur.fetchone()
+        if not row:
+            raise dbutils.DatabaseError('Bill No. not exists')
+        bill['billno'] = row['bill_id']
+        bill['date'] = row['date']
+        bill['customername'] = row['customer_name']
+        bill['customermobile'] = row['customer_mobile']
+        bill['freightcharges'] = row['freightcharges']
+        bill['extradiscount'] = row['extradiscount']
+        bill['extracharges'] = row['extracharges']
+        bill['total'] = row['total']
+        bill['purchases'] = []
+
+        cur.execute('select * from bills_data '
+            'where bill_id=?;', (billno,))
+        rows = cur.fetchall()
+        for row in rows:
+            purchase = {}
+            purchase['name'] = row['name']
+            purchase['price'] = row['price']
+            purchase['discount'] = row['discount']
+            purchase['qty'] = row['qty']
+            bill['purchases'].append(purchase)
+
+        cur.close()
+        return bill, 200
+
+    except dbutils.DatabaseError as e:
+        return {
+                'errormsg': repr(e)
+            }, 400
+
+    finally:
+        conn.close()
+
+@bills_bp.route('/api/delete', methods=['POST'])
+def delete_bills():
+    req = flask.request.json
+    def billnos():
+        for billno in req['billnos']:
+            yield (billno,)
+
+    conn = dbutils.connect_db()
+    cur = conn.cursor()
+    try:
+        cur.executemany('delete from bills where bill_id=?',
+                billnos())
+        cur.executemany('delete from bills_data where bill_id=?',
+                billnos())
+        conn.commit()
+        return 'Success', 200
+    except dbutils.DatabaseError as e:
+        conn.rollback()
+        return {
+            'errormsg': repr(e)
+            }, 200
+    finally:
+        cur.close()
+        conn.close()

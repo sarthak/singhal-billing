@@ -294,16 +294,41 @@ function setupPage(productList) {
   }
 
   addnew_button.addEventListener('click', newPurchase);
-  newPurchase();
-
   setupChargesCalc();
 
   savebill_button.addEventListener('click', saveBill);
   newbill_button.addEventListener('click', newBill);
   clearbill_button.addEventListener('click', clearBill);
 
-  date_field.value = toIndianDate(new Date());
 }
+
+function loadBill(bill) {
+  billno_field.value = bill.billno;
+  date_field.value = toIndianDate(new Date(bill.date));
+  customer_name_field.value = bill.customername;
+  customer_mobile_field.value = bill.customermobile;
+  extradiscount_field.value = bill.extradiscount;
+  freightcharges_field.value = bill.freightcharges;
+  extracharges_field.value = bill.extracharges;
+  for (let i=0; i<bill.purchases.length; i++) {
+	let p = bill.purchases[i];
+	let pur = new Purchase();
+	pur.name = p.name;
+	pur.price = p.price;
+	pur.discount = p.discount;
+	pur.qty = p.qty;
+	addNewPurchaseRow(purchases.length, pur);
+	purchases.push(pur);
+  }
+
+  updateTotal();
+  if (total_td.textContent != bill.total) {
+	window.alert('Warning : Bill totalling is inconsistent!');
+  }
+
+  will_overwrite = true;
+}
+
 
 fetch('/inventory/api/list').then(
   response => response.json()
@@ -311,8 +336,24 @@ fetch('/inventory/api/list').then(
   data => setupPage(data)
 );
 
-fetch('/billing/api/billno').then(
-  response => response.json()
-).then(
-  data => billno_field.value = data.billno
-);
+const url = new URL(window.location.href);
+if (url.searchParams.has('billno')) {
+  // Load an already existing bill
+  let billno = url.searchParams.get('billno');
+  fetch(`/bills/api/bill/${encodeURIComponent(billno)}`)
+  .then(
+	response => response.json()
+  ).then(
+	data => loadBill(data)
+  );
+}
+else {
+  newPurchase();
+  date_field.value = toIndianDate(new Date());
+
+  fetch('/billing/api/billno').then(
+	response => response.json()
+  ).then(
+	data => billno_field.value = data.billno
+  );
+}

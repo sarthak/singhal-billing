@@ -25,7 +25,7 @@
 		  <tbody>
 			<tr>
 			  <td>Bill No.</td>
-			  <td><input id="billno-field" type="numeric" class="numeric" disabled/></td>
+			  <td><input id="billno-field" type="number" class="numeric" disabled/></td>
 			</tr>
 			<tr>
 			  <td>Date</td>
@@ -36,9 +36,9 @@
 	  </div>
 
 	  <div class="center-pane">
-		<h2>Singhal Enterprises</h2>
-		<p>Behind Town Hall, Datia - 475661</p>
-		<h3>Provisional Bill</h3>
+		<!-- <h2>Singhal Enterprises</h2> -->
+		<!-- <p>Behind Town Hall, Datia - 475661</p> -->
+		<h3>Estimate / Quotation</h3>
 	  </div>
 
 	  <div class="right-pane">
@@ -80,17 +80,17 @@
 	  </tr>
 	  <tr class="sub-row">
 		<td colspan=6>Extra Discount %</td>
-		<td><input id="extradiscount-field" type="numeric"
+		<td><input id="extradiscount-field" type="number"
 		  class="numeric" min="0" max="100" value="0"/></td>
 	  </tr>
 	  <tr class="sub-row">
 		<td colspan=6>Freight Charges &#x20B9;</td>
-		<td><input id="freightcharges-field" type="numeric"
+		<td><input id="freightcharges-field" type="number"
 		  class="numeric" min="0" value="0"/></td>
 	  </tr>
 	  <tr class="sub-row">
 		<td colspan=6>Other Charges &#x20B9;</td>
-		<td><input id="extracharges-field" type="numeric"
+		<td><input id="extracharges-field" type="number"
 		  class="numeric" min="0" value="0"/></td>
 	  </tr>
 	  <tr class="sub-row">
@@ -103,7 +103,7 @@
 	<template id="row-template">
 	  <tr>
 		<td><span></span></td>
-		<td><input name="purchase_name" list="products-available"/></td>
+		<td><input name="purchase_name" type="text" list="products-available"/></td>
 		<td><input name="purchase_price" type="number" min="1" step="0.1" class="numeric"/></td>
 		<td><input name="purchase_discount" type="number" min="0" max="100" step="0.01" class="numeric"/></td>
 		<td><span></span></td>

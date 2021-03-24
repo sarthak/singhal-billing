@@ -37,4 +37,10 @@ body > nav > a:hover {
     -webkit-print-color-adjust: exact; /*chrome & webkit browsers*/
     color-adjust: exact; /*firefox & IE */
   } 
+  input {
+	background: none;
+	border: none;
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+  }
 }
