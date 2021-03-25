@@ -106,6 +106,7 @@ def delete_bills():
     conn = dbutils.connect_db()
     cur = conn.cursor()
     try:
+        cur.execute('PRAGMA cache_size=-50000;')
         cur.executemany('delete from bills where bill_id=?',
                 billnos())
         cur.executemany('delete from bills_data where bill_id=?',
@@ -119,4 +120,22 @@ def delete_bills():
             }, 200
     finally:
         cur.close()
+        conn.close()
+
+@bills_bp.route('/api/listcustomernames', methods=['GET'])
+def list_customernames():
+    conn = dbutils.connect_db()
+    try:
+        cur = conn.execute('select distinct customer_name from bills;')
+        customers = cur.fetchall()
+        response = []
+        for cust in customers:
+            response.append(cust['customer_name'])
+        cur.close()
+        return flask.json.jsonify(response), 200
+    except dbutils.DatabaseError as e:
+        return {
+            'errormsg': repr(e)
+            }, 400
+    finally:
         conn.close()

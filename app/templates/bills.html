@@ -15,7 +15,8 @@
 	<nav class="dont-print">
 	  <a href="/billing">Billing</a>
 	  <a href="/inventory">Inventory</a>
-	  <a href="/bills"</a>All Bills</a>
+	  <a href="/bills">All Bills</a>
+	  <a href="/manage">Management</a>
 	</nav>
 	<div class="filter-criteria">
 	  <p>Filter bills by ...</p>
@@ -67,7 +68,7 @@
 			  <label for="customername-checkbox">Customer name </label>
 			</td>
 			<td>
-			  <input type="text" name="customername"/>
+			  <input type="text" name="customername" list="customernames"/>
 			</td>
 		  </tr>
 
@@ -125,6 +126,8 @@
 		<th>Total (&#x20B9;)</th>
 	  </tr>
 	</table>
+	<datalist id="customernames">
+	</datalist>
 
   </body>
   <template id="row-template">

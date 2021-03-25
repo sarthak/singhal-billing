@@ -49,7 +49,6 @@ def save_changes():
                  inserted['discount']))
 
         for deleted in req['deleted']:
-            print(deleted)
             curr.execute(
                 'delete from inventory where name=?',
                 (deleted['name'],))

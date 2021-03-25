@@ -17,6 +17,7 @@
 	  <a href="/billing">Billing</a>
 	  <a href="/inventory">Inventory</a>
 	  <a href="/bills"</a>All Bills</a>
+	  <a href="/manage">Management</a>
 	</nav>
 	<div class="bill-header">
 	  <div class="left-pane">
@@ -106,7 +107,7 @@
 		<td><input name="purchase_name" type="text" list="products-available"/></td>
 		<td><input name="purchase_price" type="number" min="1" step="0.1" class="numeric"/></td>
 		<td><input name="purchase_discount" type="number" min="0" max="100" step="0.01" class="numeric"/></td>
-		<td><span></span></td>
+		<td><input name="purchase_netrate" type="number" min="0" step="0.01" class="numeric"/></td>
 		<td><input name="purchase_qty" type="number" min="1" step="1" class="numeric"/></td>
 		<td><span></span></td>
 		<td class="dont-print"><input type="button" name="remove-row" value="Remove"/></td>

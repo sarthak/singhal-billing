@@ -118,7 +118,7 @@ function updateRow(row, purchase) {
   name.value = purchase.name;
   price.value = purchase.price;
   discount.value = purchase.discount;
-  netrate.textContent = purchase.netrate;
+  netrate.value = purchase.netrate;
   qty.value = purchase.qty;
   total.textContent = purchase.total;
   updateTotal();
@@ -167,6 +167,19 @@ function rowChanged(event) {
 	  updateRow(row, purchases[sno]);
 	} else {
 	  target.value = purchases[sno].qty;
+	}
+  }
+  else if (name === 'purchase_netrate') {
+	console.log(1);
+	let val = target.value;
+	if (checkPrice(val)) {
+	  let price = row.children.item(2).firstElementChild;
+	  let discount = row.children.item(3).firstElementChild;
+	  discount.value = 100 * (+price.value - +val) / (+price.value);
+	  purchases[sno].discount = +discount.value;
+	  updateRow(row, purchases[sno]);
+	} else {
+	  target.value = purchases[sno].netrate;
 	}
   }
 }
@@ -323,7 +336,7 @@ function loadBill(bill) {
 
   updateTotal();
   if (total_td.textContent != bill.total) {
-	window.alert('Warning : Bill totalling is inconsistent!');
+	window.alert(`Warning : Bill totalling is inconsistent! Expected : ${bill.total}, found : ${total_td.textContent}`);
   }
 
   will_overwrite = true;

@@ -7,7 +7,8 @@ const insertprod = {
   name_field: addnew.children.item(1),
   price_field: addnew.children.item(3),
   discount_field: addnew.children.item(5),
-  insert_button: addnew.children.item(6)
+  netrate_field: addnew.children.item(7),
+  insert_button: addnew.children.item(8)
 };
 
 function Product(name, price, discount) {
@@ -58,6 +59,22 @@ function checkDiscount(discount) {
   return true;
 }
 
+function updateRow(row, updatewith) {
+  let price = row.children.item(1).firstElementChild;
+  let discount = row.children.item(2).firstElementChild;
+  let netrate = row.children.item(3).firstElementChild;
+  if (updatewith === 'discount') {
+	netrate.value = +price.value * (1 - (+discount.value)/100);
+  } else if (updatewith === 'netrate') {
+	discount.value = 100 * (+price.value - netrate.value) / +price.value;
+  }
+  return {
+	price: price.value,
+	discount: discount.value,
+	netrate: netrate.value
+  };
+}
+
 function tableEdited(event) {
   let target = event.target;
   let input_type = target.getAttribute('name');
@@ -67,6 +84,7 @@ function tableEdited(event) {
 	  products[id].dirty = true;
 	  products[id].price = +target.value;
 	  savebutton.disabled = false;
+	  updateRow(event.currentTarget, 'discount');
 	}
 	else
 	  target.value = products[id].price;
@@ -75,8 +93,16 @@ function tableEdited(event) {
 	  products[id].dirty = true;
 	  products[id].discount = +target.value;
 	  savebutton.disabled = false;
+	  updateRow(event.currentTarget, 'discount');
 	} else
 	  target.value = products[id].discount;
+  } else if (input_type == 'product_netrate') {
+	if (checkPrice(target.value)) {
+	  products[id].dirty = true;
+	  products[id].discount = +updateRow(event.currentTarget, 'netrate').discount;
+	  savebutton.disabled = false;
+	} else
+	  updateRow(event.currentTarget, 'discount');
   }
 }
 
@@ -105,11 +131,12 @@ function create_newrow (id, product) {
   let name_field = row.children.item(0).firstElementChild;
   let price_field = row.children.item(1).firstElementChild;
   let discount_field = row.children.item(2).firstElementChild;
-  let remove_button = row.children.item(3).firstElementChild;
+  let remove_button = row.children.item(4).firstElementChild;
 
   name_field.value = product.name;
   price_field.value = product.price;
   discount_field.value = product.discount;
+  updateRow(row, 'discount');
 
   row.setAttribute('product_id', id);
   row.addEventListener('change', tableEdited);
@@ -130,6 +157,13 @@ function insert_newproduct() {
   if (!checkDiscount(discount))
 	return;
   discount = +discount;
+  let netrate = insertprod.netrate_field.value;
+  if (netrate !== '') {
+	if (!checkPrice(netrate))
+	  return;
+	netrate = +netrate;
+	discount = 100 * (price - netrate)/price;
+  }
 
   product = new Product(name, price, discount);
   product.dirty = true;
@@ -141,6 +175,7 @@ function insert_newproduct() {
   insertprod.name_field.value = '';
   insertprod.price_field.value = '';
   insertprod.discount_field.value = '';
+  insertprod.netrate_field.value = '';
 }
 
 function save_data() {

@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Singhal Billing</title>
+  <meta name="description" content="Billing System">
+  <meta name="author" content="Sarthak">
+  <link rel="stylesheet" href="{{css}}/main.css">
+
+  <script src="{{js}}/manage.js" defer></script>
+</head>
+
+<body>
+  <nav>
+    <a href="/billing">Billing</a>
+    <a href="/inventory">Inventory</a>
+    <a href="/bills">All Bills</a>
+    <a href="/manage">Management</a>
+  </nav>
+  <h3>Database Info</h3>
+  <p>Database Location : <input type="text" name="db-location" disabled/></p>
+  <p>Database Size (MB) : <input type="number" name="db-size" disabled/></p>
+  <p>Database Health : <input type="text" name="db-health" disabled/></p>
+  <p>Backup Location : <input type="text" name="db-backuplocation" disabled/></p>
+  <input type="text" name="backup-to"/>
+  <input type="button" name="backup-button" value="Backup Database"/>
+
+  <h3>Existing Backups</h3>
+  <table class="main-table">
+	<thead>
+	  <tr>
+		<th>Backup Date Time</th>
+		<th>Backup Size (MB)</th>
+		<th></th>
+		<th></th>
+	  </tr>
+	</thead>
+	<tbody>
+	</tbody>
+  </table>
+
+  <template id="row-template">
+	<tr>
+	  <td></td>
+	  <td></td>
+	  <td><input type="button" name="restore-backup" value="Restore"/></td>
+	  <td><input type="button" name="delete-backup" value="Delete"/></td>
+	</tr>
+  </template>
+</body>
+</html>

@@ -35,6 +35,7 @@ const table = elem('#results-table');
 const rowtemplate = elem('#row-template');
 const selectall = elem('#table-header').firstElementChild.firstElementChild;
 const deleteselected_buttom = elem('input[name=delete-selected]');
+const customernames = elem('#customernames');
 
 const billnos = Array();
 const checkboxes = Array();
@@ -216,3 +217,17 @@ function deleteSelectedBills() {
 search_button.addEventListener('click', search);
 deleteselected_buttom.addEventListener('click', deleteSelectedBills);
 selectall.addEventListener('change', selectAllToggle);
+
+fetch('/bills/api/listcustomernames')
+.then(response => response.json())
+.then(data => {
+  if (data.hasOwnProperty('errormsg'))
+	window.alert(data.errormsg);
+  else {
+	for (let i=0; i<data.length; i++) {
+	  let opt = document.createElement('option');
+	  opt.value = data[i];
+	  customernames.append(opt);
+	}
+  }
+});

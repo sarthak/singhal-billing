@@ -27,6 +27,8 @@ create table bills_data (
   qty int
 );
 
+create index billsdata_index on bills_data (bill_id);
+
 insert into inventory values
   ('elbow', 120.0, 5.0),
   ('tee', 180.0, 15),
