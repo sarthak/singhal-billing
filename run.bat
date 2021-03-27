@@ -1,5 +1,0 @@
-env/bin/activate.bat
-set BILLING_DB_PATH=./db/data.db
-set BILLING_BACKUP_PATH=./db/backup
-waitress-serve --call 'app:create_app'
-chrome 0.0.0.0:8080/
