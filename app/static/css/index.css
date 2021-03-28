@@ -41,6 +41,10 @@
   height: 100%;
 }
 
+#billing-table input[name=purchase_name] {
+  width: 20em;
+}
+
 .mini-table input {
   box-sizing: border-box;
   width: 100%;
