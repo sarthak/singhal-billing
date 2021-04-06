@@ -13,9 +13,8 @@ create table bills (
   customer_name text,
   customer_mobile text,
   date text,
-  extradiscount real,
   freightcharges real,
-  extracharges real,
+  deposited real,
   total real
 );
 

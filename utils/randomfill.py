@@ -13,7 +13,7 @@ def randomdate(start, end):
     return date.isoformat()
 
 bills = []
-for i in range(1000, 50000):
+for i in range(1000, 5000):
     total = 0
     items = []
     for j in range(random.randrange(5, 50)):
@@ -26,8 +26,8 @@ for i in range(1000, 50000):
 
     extradiscount = random.randrange(0, 25)
     freightcharges = random.randrange(0, 1000)
-    extracharges = random.randrange(0, 500)
-    total = total * (100 -extradiscount)/100 + freightcharges + extracharges
+    deposited = 0
+    total = total * (100 -extradiscount)/100 + freightcharges
 
     bills.append((
         i,
@@ -35,9 +35,8 @@ for i in range(1000, 50000):
         '',
         randomdate(datetime.fromisoformat('2021-01-01T00:00:00'),
             datetime.fromisoformat('2021-03-24T00:00:00')),
-        extradiscount,
         freightcharges,
-        extracharges,
+        deposited,
         items,
         total
         ))
@@ -46,11 +45,11 @@ def bill_yielder():
     for bill in bills:
         yield (
             bill[0], bill[1], bill[2], bill[3], bill[4], bill[5],
-            bill[6], bill[8])
+            bill[7])
 
 def items_yielder():
     for bill in bills:
-        for item in bill[7]:
+        for item in bill[6]:
             yield (
                 bill[0],
                 item[0], item[1], item[2], item[3])
@@ -62,7 +61,7 @@ cur = conn.cursor()
 
 try:
     cur.executemany('insert into bills values '
-        '(?, ?, ?, ?, ?, ?, ?, ?)', bill_yielder())
+        '(?, ?, ?, ?, ?, ?, ?)', bill_yielder())
     cur.executemany('insert into bills_data values '
         '(?, ?, ?, ?, ?)', items_yielder())
     conn.commit()

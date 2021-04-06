@@ -45,6 +45,10 @@
   width: 20em;
 }
 
+#billing-table th, #billing-table td {
+  white-space: nowrap;
+}
+
 .mini-table input {
   box-sizing: border-box;
   width: 100%;

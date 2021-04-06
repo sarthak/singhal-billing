@@ -69,8 +69,7 @@ def get_bill(billno):
         bill['customername'] = row['customer_name']
         bill['customermobile'] = row['customer_mobile']
         bill['freightcharges'] = row['freightcharges']
-        bill['extradiscount'] = row['extradiscount']
-        bill['extracharges'] = row['extracharges']
+        bill['deposited'] = row['deposited']
         bill['total'] = row['total']
         bill['purchases'] = []
 

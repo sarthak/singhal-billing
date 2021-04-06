@@ -8,6 +8,7 @@
 	<meta name="author" content="Sarthak">
 	<link rel="stylesheet" href="{{css}}/main.css">
 	<link rel="stylesheet" href="{{css}}/index.css">
+	<script src="{{js}}/utility.js" defer></script>
 	<script src="{{js}}/billing.js" defer></script>
 
   </head>
@@ -65,51 +66,64 @@
 	  <button id="savebill-button">Save Bill</button>
 	</div>
 	<table class="main-table" id="billing-table">
-	  <tr>
-		<th>S. No.</th>
-		<th>Item Name</th>
-		<th>Price (&#x20B9;)</th>
-		<th>Discount (%)</th>
-		<th>Net Rate (&#x20B9;)</th>
-		<th>Qty</th>
-		<th>Total (&#x20B9;)</th>
-	  </tr>
-	  <tr id="subtotal-row" class="sub-row">
-		<td colspan=5><input type="button" value="Add New" class="dont-print"/></td>
-		<td>Sub-Total &#x20B9;</td>
-		<td></td>
-	  </tr>
-	  <tr class="sub-row">
-		<td colspan=6>Extra Discount %</td>
-		<td><input id="extradiscount-field" type="number"
-		  class="numeric" min="0" max="100" value="0"/></td>
-	  </tr>
-	  <tr class="sub-row">
-		<td colspan=6>Freight Charges &#x20B9;</td>
-		<td><input id="freightcharges-field" type="number"
-		  class="numeric" min="0" value="0"/></td>
-	  </tr>
-	  <tr class="sub-row">
-		<td colspan=6>Other Charges &#x20B9;</td>
-		<td><input id="extracharges-field" type="number"
-		  class="numeric" min="0" value="0"/></td>
-	  </tr>
-	  <tr class="sub-row">
-		<td colspan=6>Total &#x20B9;</td>
-		<td id="finaltotal-field"></td>
-	  </tr>
+      <thead>
+        <tr>
+          <th>S. No.</th>
+          <th>Item Name</th>
+          <th>Price (&#x20B9;)</th>
+          <th>Discount (%)</th>
+          <th>Net Rate (&#x20B9;)</th>
+          <th>Qty</th>
+          <th>Total (&#x20B9;)</th>
+          <th>Net Total (&#x20B9;)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="bottom-row" class="sub-row">
+          <td colspan=2><input type="button" value="Add New" id="addnewrow-button" class="dont-print"/></td>
+          <td>Discount &#x20B9;</td>
+          <td id="discounttotal"></td>
+          <td colspan=2>Sub-Total &#x20B9;</td>
+          <td id="subtotal"></td>
+          <td id="subnettotal"></td>
+        </tr>
+        <tr class="sub-row">
+          <td colspan=3>Extra Discount &#x20B9;</td>
+          <td><input id="extradiscount" type="number"
+            class="numeric" min="0" value="0" step="0.001"/></td>
+          <td colspan=3>Less Discount &#x20B9;</td>
+          <td id="subtotallessdiscount"></td>
+        </tr>
+        <tr class="sub-row">
+          <td colspan=7>Freight/Other Charges &#x20B9;</td>
+          <td><input id="freightcharges" type="number"
+            class="numeric" min="0" value="0" step="0.001"/></td>
+        </tr>
+        <tr class="sub-row">
+          <td colspan=7>Total &#x20B9;</td>
+          <td id="grandtotal"></td>
+        </tr>
+        <tr class="sub-row">
+          <td colspan=4>Already deposited &#x20B9;</td>
+          <td><input id="alreadydeposited" type="number"
+            class="numeric" min="0" value="0" step="0.001"/></td>
+          <td colspan=2>Balance Payable &#x20B9;</td>
+          <td id="balancepayable"></td>
+        </tr>
+      </tbody>
 	</table>
 	<datalist id="products-available">
 	</datalist>
 	<template id="row-template">
 	  <tr>
-		<td><span></span></td>
+		<td><span name="purchase_sno"></span></td>
 		<td><input name="purchase_name" type="text" list="products-available"/></td>
 		<td><input name="purchase_price" type="number" min="1" step="0.1" class="numeric"/></td>
 		<td><input name="purchase_discount" type="number" min="0" max="100" step="0.01" class="numeric"/></td>
 		<td><input name="purchase_netrate" type="number" min="0" step="0.01" class="numeric"/></td>
 		<td><input name="purchase_qty" type="number" min="1" step="1" class="numeric"/></td>
-		<td><span></span></td>
+		<td><span name="purchase_total"></span></td>
+		<td><span name="purchase_nettotal"></span></td>
 		<td class="dont-print"><input type="button" name="remove-row" value="Remove"/></td>
 	  </tr>
 	</template>

@@ -51,11 +51,11 @@ def save():
     cur = conn.cursor()
     try:
         cur.execute('insert into bills values '
-            '(?, ?, ?, ?, ?, ?, ?, ?)', (
+            '(?, ?, ?, ?, ?, ?, ?)', (
                 req['billno'], req['customer_name'],
                 req['customer_mobile'], req['date'],
-                req['extradiscount'], req['freightcharges'],
-                req['extracharges'], req['total'])
+                req['freightcharges'], req['deposited'],
+                req['total'])
         )
         for purchase in req['purchases']:
             cur.execute('insert into bills_data values '
