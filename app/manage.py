@@ -1,6 +1,7 @@
 import flask
 from . import dbutils
 from pathlib import Path
+from shutil import copyfile
 
 manage_bp = flask.Blueprint('manage', __name__)
 
@@ -43,3 +44,42 @@ def backup():
     req = flask.request.json
     path = Path(dbutils.BACKUP_PATH).joinpath(f'{req["name"]}.db')
     return dbutils.try_backup(path)
+
+@manage_bp.route('/api/list', methods=['GET'])
+def list():
+    path = Path(dbutils.BACKUP_PATH)
+    backups = []
+    for file in path.iterdir():
+        if file.is_file():
+            backups.append({
+                'name': file.stem,
+                'size': file.stat().st_size / (1 << 20)
+            })
+    return flask.json.jsonify(backups), 200
+
+@manage_bp.route('/api/delete', methods=['POST'])
+def delete():
+    req = flask.request.json
+    path = Path(dbutils.BACKUP_PATH).joinpath(f'{req["name"]}.db')
+    if path.exists():
+        path.unlink()
+        return '', 200
+    else:
+        return {
+            'errormsg': 'No such backup'
+        }, 400
+
+@manage_bp.route('/api/restore', methods=['POST'])
+def restore():
+    req = flask.request.json
+    path = Path(dbutils.BACKUP_PATH).joinpath(f'{req["name"]}.db')
+    dbpath = Path(dbutils.DB_PATH)
+    if not path.exists():
+        return {
+            'errormsg': 'Backup does not exist'
+        }, 400
+    if dbpath.exists():
+        dbpath.unlink()
+
+    copyfile(path, dbpath)
+    return '', 200

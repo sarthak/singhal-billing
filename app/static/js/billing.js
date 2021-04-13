@@ -77,13 +77,13 @@ Row.prototype = newLiveElement({
       node: undefined,
       property: 'textContent',
       get: Number.parseFloat,
-      set: normalizedFloat
+      set: normalizedInt
     },
     nettotal: {
       node: undefined,
       property: 'textContent',
       get: Number.parseFloat,
-      set: normalizedFloat
+      set: normalizedInt
     },
     remove: {
       node: undefined
@@ -147,55 +147,55 @@ const bill = newLiveElement({
         node: elem('#discounttotal'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       subtotal: {
         node: elem('#subtotal'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       subnettotal: {
         node: elem('#subnettotal'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       extradiscount: {
         node: elem('#extradiscount'),
         property: 'value',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       subtotallessdiscount: {
         node: elem('#subtotallessdiscount'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       freightcharges: {
         node: elem('#freightcharges'),
         property: 'value',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       total: {
         node: elem('#grandtotal'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       deposited: {
         node: elem('#alreadydeposited'),
         property: 'value',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       },
       payable: {
         node: elem('#balancepayable'),
         property: 'textContent',
         get: Number.parseFloat,
-        set: normalizedFloat
+        set: normalizedInt
       }
     }
   },
