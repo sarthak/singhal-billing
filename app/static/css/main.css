@@ -44,3 +44,14 @@ body > nav > a:hover {
 	-moz-appearance: textfield;
   }
 }
+
+.page-navigator {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin: 5px;
+}
+
+.page-navigator > label {
+  padding: 5px;
+}

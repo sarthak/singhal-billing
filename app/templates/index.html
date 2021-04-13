@@ -68,6 +68,7 @@
 	<table class="main-table" id="billing-table">
       <thead>
         <tr>
+          <th class="dont-print">Code Name</th>
           <th>S. No.</th>
           <th>Item Name</th>
           <th>Price (&#x20B9;)</th>
@@ -80,6 +81,7 @@
       </thead>
       <tbody>
         <tr id="bottom-row" class="sub-row">
+          <td class="dont-print"></td>
           <td colspan=2><input type="button" value="Add New" id="addnewrow-button" class="dont-print"/></td>
           <td>Discount &#x20B9;</td>
           <td id="discounttotal"></td>
@@ -88,6 +90,7 @@
           <td id="subnettotal"></td>
         </tr>
         <tr class="sub-row">
+          <td class="dont-print"></td>
           <td colspan=3>Extra Discount &#x20B9;</td>
           <td><input id="extradiscount" type="number"
             class="numeric" min="0" value="0" step="0.001"/></td>
@@ -95,15 +98,18 @@
           <td id="subtotallessdiscount"></td>
         </tr>
         <tr class="sub-row">
+          <td class="dont-print"></td>
           <td colspan=7>Freight/Other Charges &#x20B9;</td>
           <td><input id="freightcharges" type="number"
             class="numeric" min="0" value="0" step="0.001"/></td>
         </tr>
         <tr class="sub-row">
+          <td class="dont-print"></td>
           <td colspan=7>Total &#x20B9;</td>
           <td id="grandtotal"></td>
         </tr>
         <tr class="sub-row">
+          <td class="dont-print"></td>
           <td colspan=4>Already deposited &#x20B9;</td>
           <td><input id="alreadydeposited" type="number"
             class="numeric" min="0" value="0" step="0.001"/></td>
@@ -114,8 +120,11 @@
 	</table>
 	<datalist id="products-available">
 	</datalist>
+	<datalist id="codenames-available">
+	</datalist>
 	<template id="row-template">
 	  <tr>
+		<td class="dont-print"><input name="purchase_codename" list="codenames-available"/></td>
 		<td><span name="purchase_sno"></span></td>
 		<td><input name="purchase_name" type="text" list="products-available"/></td>
 		<td><input name="purchase_price" type="number" min="1" step="0.1" class="numeric"/></td>

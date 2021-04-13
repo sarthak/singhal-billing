@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{css}}/main.css">
   <link rel="stylesheet" href="{{css}}/inventory.css">
 
+  <script src="{{js}}/utility.js" defer></script>
   <script src="{{js}}/inventory.js" defer></script>
 </head>
 
@@ -25,38 +26,58 @@
   </div>
   <div id="add-new">
     <label>Name: </label>
-    <input type="text"/>
+    <input type="text" name="name"/>
+    <label>Codename: </label>
+    <input type="text" name="codename"/>
     <label>Price: &#x20B9;</label>
-    <input class="numeric" type="number" min="0" step="0.1"/>
+    <input class="numeric" type="number" name="price" min="0" step="0.1"/>
     <label>Discount (%):</label>
-    <input class="numeric" type="number" min="0" max="100" step="0.01"/>
+    <input class="numeric" type="number" name="discount" min="0" max="100" step="0.01"/>
     <label>Net Rate: &#x20B9;</label>
-    <input class="numeric" type="text"/>
+    <input class="numeric" name="netrate" type="text"/>
     <button>Add this item</button>
   </div>
 
-  <div class="name-sort">
-	<span class="dummy-link">All</span>
-	<span class="dummy-link">A</span>
-	<span class="dummy-link">B</span>
-	<span class="dummy-link">C</span>
-	<span class="dummy-link">D</span>
+  <div id="top-page-navigator" class="page-navigator">
+    <button name="first">&lt;&lt;</button>
+    <button name="prev">&lt;</button>
+    <label name="cur-page">1</label>
+    <label> <i>of</i> </label>
+    <label name="max-page">100</label>
+    <button name="next">&gt;</button>
+    <button name="last">&gt;&gt;</button>
   </div>
   
   <table class="main-table" id="inventory-table">
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Discount</th>
-      <th>Net Rate</th>
-      <th></th>
-    </tr>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Codename</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Net Rate</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
   </table>
+
+  <div id="bottom-page-navigator" class="page-navigator">
+    <button name="first">&lt;&lt;</button>
+    <button name="prev">&lt;</button>
+    <label name="cur-page">1</label>
+    <label> <i>of</i> </label>
+    <label name="max-page">100</label>
+    <button name="next">&gt;</button>
+    <button name="last">&gt;&gt;</button>
+  </div>
 </body>
 
 <template id="row-template">
   <tr>
 	<td><input name="product_name" type="text" disabled/></td>
+	<td><input name="product_codename" type="text"/></td>
 	<td>&#x20B9; <input name="product_price" class="numeric" type="number" min="0" step="0.1"/></td>
 	<td><input name="product_discount" class="numeric" type="number" min="0" max="100" step="0.01"/> %</td>
 	<td>&#x20B9; <input name="product_netrate" class="numeric" type="number" min="0" step="0.1"/></td>

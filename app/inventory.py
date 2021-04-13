@@ -24,7 +24,8 @@ def list_all():
             products.append({
                 'name': prod['name'],
                 'price': prod['price'],
-                'discount': prod['discount']
+                'discount': prod['discount'],
+                'codename': prod['codename']
             })
     conn.close()
     return flask.json.jsonify(products)
@@ -38,15 +39,15 @@ def save_changes():
         for updated in req['updated']:
             curr.execute(
                 'update inventory '
-                'set price=?, discount=? where name=?',
+                'set price=?, discount=?, codename=? where name=?',
                 (updated['price'], updated['discount'],
-                 updated['name']))
+                 updated['codename'], updated['name']))
 
         for inserted in req['inserted']:
             curr.execute(
-                'insert into inventory values (?, ?, ?)',
+                'insert into inventory values (?, ?, ?, ?)',
                 (inserted['name'], inserted['price'],
-                 inserted['discount']))
+                 inserted['discount'], inserted['codename']))
 
         for deleted in req['deleted']:
             curr.execute(

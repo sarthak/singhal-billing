@@ -43,6 +43,7 @@
 
 #billing-table input[name=purchase_name] {
   width: 20em;
+  font-weight: bold;
 }
 
 #billing-table th, #billing-table td {

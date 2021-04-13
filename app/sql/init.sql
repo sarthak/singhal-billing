@@ -5,7 +5,8 @@ drop table if exists bills_data;
 create table inventory (
   name text primary key,
   price real,
-  discount real default 0.0
+  discount real default 0.0,
+  codename text -- should be unique semantically but sqlite does not support null unique so can't make this unique
 );
 
 create table bills (

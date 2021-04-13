@@ -4,12 +4,16 @@ const row_template = elem('#row-template');
 const products_datalist = elem('#products-available');
 const products = {}; // Will use this as a hash table
 
+const codenames_datalist = elem('#codenames-available');
+const codenames = {}; // Will use this as a hash table
+
 function Row(sno) {
   let row = row_template.content.firstElementChild.cloneNode(true);
   let sel = row.querySelector.bind(row);
   this.html = {
     tr: row,
     sno: sel('span[name=purchase_sno]'),
+    codename: sel('input[name=purchase_codename]'),
     name: sel('input[name=purchase_name]'),
     price: sel('input[name=purchase_price]'),
     netrate: sel('input[name=purchase_netrate]'),
@@ -36,6 +40,10 @@ Row.prototype = newLiveElement({
     sno: {
       node: undefined,
       property: 'textContent'
+    },
+    codename: {
+      node: undefined,
+      property: 'value'
     },
     name: {
       node: undefined,
@@ -228,6 +236,18 @@ function rowChanged() {
 	let val = event.target.value;
 	if (products.hasOwnProperty(val)) {
 	  let p = products[val];
+      row.codename = p.codename;
+      row.price = p.price;
+      row.discount = p.discount;
+      row.qty = 1;
+      row.calcRow(true);
+	}
+  }
+  else if (name === 'purchase_codename') {
+	let val = event.target.value;
+	if (codenames.hasOwnProperty(val)) {
+	  let p = products[codenames[val]];
+      row.name = p.name;
       row.price = p.price;
       row.discount = p.discount;
       row.qty = 1;
@@ -398,6 +418,13 @@ function setupPage(productList) {
 	let opt = document.createElement('option');
 	opt.setAttribute('value', p.name);
 	products_datalist.append(opt);
+
+    if (p.codename != null) {
+      codenames[p.codename] = p.name;
+      let opt = document.createElement('option');
+      opt.setAttribute('value', p.codename);
+      codenames_datalist.append(opt);
+    }
   }
 
   bill.html.newrow.addEventListener('click', newRow);
