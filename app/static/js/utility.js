@@ -7,16 +7,16 @@ function normalizedInt(number) {
 }
 
 function toIndianDate(date) {
-  return `${date.getDate()} / ${date.getMonth()+1} / ${date.getFullYear()}`;
+  return `${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`;
 }
 
 function checkPrice(price) {
   let p = +price;
   if (isNaN(p)) {
-	window.alert('Price is not a valid number');
-	return false;
+    window.alert('Price is not a valid number');
+    return false;
   } else if (p < 0) {
-	window.alert('Price should be positive');
+    window.alert('Price should be positive');
   }
   return true;
 }
@@ -24,11 +24,11 @@ function checkPrice(price) {
 function checkDiscount(discount) {
   let d = +discount;
   if (isNaN(d)) {
-	window.alert('Discount is not a valid number');
-	return false;
+    window.alert('Discount is not a valid number');
+    return false;
   } else if (d < 0 || d > 100) {
-	window.alert('Discount should be a percentage between 0 and 100');
-	return false;
+    window.alert('Discount should be a percentage between 0 and 100');
+    return false;
   }
   return true;
 }
@@ -47,14 +47,14 @@ function rec_generateProperties(obj, tree) {
       if (value.hasOwnProperty('property')) {
         // Now create getter and setters that bind dynamically
         Object.defineProperty(obj, key, {
-          get: function() {
+          get: function () {
             let retval = this.html[key][value.property];
             if (value.hasOwnProperty('get')) {
               return value.get(retval);
             }
             return retval;
           },
-          set: function(val) {
+          set: function (val) {
             let node = this.html[key];
             if (value.hasOwnProperty('set')) {
               node[value.property] = value.set(val);
@@ -134,9 +134,8 @@ Paginator.prototype = {
     }
     let newitems = Array();
     for (let i = page * this.maxitems;
-             i < Math.min(this.items.length, (page+1) * this.maxitems);
-             i ++)
-    {
+      i < Math.min(this.items.length, (page + 1) * this.maxitems);
+      i++) {
       newitems.push(this.renderer(this.items[i]));
     }
     this.body.replaceChildren(...newitems);

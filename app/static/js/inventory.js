@@ -8,23 +8,23 @@ function Product(id, name, codename, price, discount) {
     this.codename = null;
   this.price = normalizedFloat(price);
   this.discount = normalizedFloat(discount);
-  this.netrate = normalizedFloat(this.price * (100 - this.discount)/100);
+  this.netrate = normalizedFloat(this.price * (100 - this.discount) / 100);
   this.dirty = false;
   this.inserted = false;
   this.deleted = false;
 }
 
 Product.prototype = {
-  update: function(with_discount) {
+  update: function (with_discount) {
     if (!this.codename)
       this.codename = null;
     this.price = normalizedFloat(this.price);
     if (with_discount) {
       this.discount = normalizedFloat(this.discount);
-      this.netrate = normalizedFloat(this.price * (100 - this.discount)/100);
+      this.netrate = normalizedFloat(this.price * (100 - this.discount) / 100);
     } else {
       this.netrate = normalizedFloat(this.netrate);
-      this.discount = normalizedFloat(100 * (this.price - this.netrate)/this.price);
+      this.discount = normalizedFloat(100 * (this.price - this.netrate) / this.price);
     }
   }
 }
@@ -101,7 +101,7 @@ const row_helpers = {
   remove: (row) => {
     return row.children.item(5).firstElementChild;
   },
-  copyFromProduct (row, product) {
+  copyFromProduct(row, product) {
     this.name(row).value = product.name;
     this.codename(row).value = product.codename;
     this.price(row).value = product.price;
@@ -128,24 +128,24 @@ function productRenderer(product) {
 
 function checkName(name) {
   if (name === '') {
-	window.alert('Name can not be empty');
-	return false;
+    window.alert('Name can not be empty');
+    return false;
   }
-  for (let i=0; i<table.products.length; i++) {
-	if (name == table.products[i].name) {
-	  window.alert('Product of this name already exists in db');
-	  return false;
-	}
+  for (let i = 0; i < table.products.length; i++) {
+    if (name == table.products[i].name) {
+      window.alert('Product of this name already exists in db');
+      return false;
+    }
   }
   return true;
 }
 
 function checkCodename(codename) {
   // for (let i=0; i<table.products.length; i++) {
-	// if (codename == table.products[i].codename) {
-	  // window.alert('Product of this code name already exists in db');
-	  // return false;
-	// }
+  // if (codename == table.products[i].codename) {
+  // window.alert('Product of this code name already exists in db');
+  // return false;
+  // }
   // }
   return true;
 }
@@ -156,32 +156,32 @@ function tableEdited(event) {
   let input_type = target.getAttribute('name');
   let id = event.currentTarget.getAttribute('product_id');
   if (input_type === 'product_price') {
-	if (checkPrice(target.value)) {
-	  products[id].dirty = true;
-	  products[id].price = target.value;
-	  table.html.save.disabled = false;
+    if (checkPrice(target.value)) {
+      products[id].dirty = true;
+      products[id].price = target.value;
+      table.html.save.disabled = false;
       products[id].update(true);
-	}
+    }
   } else if (input_type === 'product_codename') {
-	if (checkCodename(target.value)) {
-	  products[id].dirty = true;
-	  products[id].codename = target.value;
-	  table.html.save.disabled = false;
+    if (checkCodename(target.value)) {
+      products[id].dirty = true;
+      products[id].codename = target.value;
+      table.html.save.disabled = false;
       products[id].update(true);
-	}
+    }
   } else if (input_type == 'product_discount') {
-	if (checkDiscount(target.value)) {
-	  products[id].dirty = true;
-	  products[id].discount = +target.value;
-	  table.html.save.disabled = false;
+    if (checkDiscount(target.value)) {
+      products[id].dirty = true;
+      products[id].discount = +target.value;
+      table.html.save.disabled = false;
       products[id].update(true);
-	}
+    }
   } else if (input_type == 'product_netrate') {
-	if (checkPrice(target.value)) {
-	  products[id].dirty = true;
+    if (checkPrice(target.value)) {
+      products[id].dirty = true;
       products[id].netrate = +target.value;
       products[id].update(false);
-	}
+    }
   }
   row_helpers.copyFromProduct(event.currentTarget, products[id]);
 }
@@ -190,15 +190,15 @@ function removeRow(event) {
   let target = event.target;
   let input_type = target.getAttribute('name');
   if (input_type === 'product_delete') {
-	let id = event.currentTarget.getAttribute('product_id');
-	table.products[id].dirty = true;
-	if (!table.products[id].deleted) {
-	  table.products[id].deleted = true;
-	  table.html.save.disabled = false;
-	} else {
-	  table.products[id].deleted = false;
-	  table.html.save.disabled = false;
-	}
+    let id = event.currentTarget.getAttribute('product_id');
+    table.products[id].dirty = true;
+    if (!table.products[id].deleted) {
+      table.products[id].deleted = true;
+      table.html.save.disabled = false;
+    } else {
+      table.products[id].deleted = false;
+      table.html.save.disabled = false;
+    }
     row_helpers.copyFromProduct(event.currentTarget, table.products[id]);
   }
 }
@@ -206,22 +206,22 @@ function removeRow(event) {
 function insert_newproduct() {
   let name = insertprod.name;
   if (!checkName(name))
-	return;
+    return;
   let codename = insertprod.codename;
   if (!checkCodename(codename))
     return;
   let price = insertprod.price;
   if (!checkPrice(price))
-	return;
+    return;
   let discount = insertprod.discount;
   if (!checkDiscount(discount))
-	return;
+    return;
   let netrate = insertprod.netrate;
   if (netrate !== '') {
-	if (!checkPrice(netrate))
-	  return;
-	netrate = +netrate;
-	discount = 100 * (price - netrate)/price;
+    if (!checkPrice(netrate))
+      return;
+    netrate = +netrate;
+    discount = 100 * (price - netrate) / price;
   }
 
   product = new Product(table.products.length, name, codename, price, discount);
@@ -244,52 +244,52 @@ function save_data() {
   let products = table.products;
 
   let tosave = {
-	updated: [],
-	inserted: [],
-	deleted: []
+    updated: [],
+    inserted: [],
+    deleted: []
   };
-  for (let i=0; i<products.length; i++) {
-	if (products[i].dirty) {
-	  if (products[i].inserted || products[i].deleted) {
-		if (products[i].inserted)
-		  tosave.inserted.push(products[i]);
-		if (products[i].deleted)
-		  tosave.deleted.push(products[i]);
-	  } else {
-		tosave.updated.push(products[i]);
-	  }
-	}
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].dirty) {
+      if (products[i].inserted || products[i].deleted) {
+        if (products[i].inserted)
+          tosave.inserted.push(products[i]);
+        if (products[i].deleted)
+          tosave.deleted.push(products[i]);
+      } else {
+        tosave.updated.push(products[i]);
+      }
+    }
   }
 
   fetch('/inventory/api/save', {
-	method: 'POST',
-	headers: {
+    method: 'POST',
+    headers: {
       'Content-Type': 'application/json'
     },
-	body: JSON.stringify(tosave)
+    body: JSON.stringify(tosave)
   }).then(
-	(response) => {
-	  if (response.ok) {
-		window.location.reload();
-	  } else {
-		return response.json();
-	  }
-	}
+    (response) => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        return response.json();
+      }
+    }
   ).then(
-	(data) => {
-	  window.alert(data.errormsg);
-	  table.html.save.disabled = false;
-	  table.html.save.textContent = "Save Changes";
-	}
+    (data) => {
+      window.alert(data.errormsg);
+      table.html.save.disabled = false;
+      table.html.save.textContent = "Save Changes";
+    }
   );
 }
 
 function setupPage(productlist) {
-  for (let i=0; i<productlist.length; i++) {
-	let p = productlist[i];
-	table.products.push(
-	  new Product(i, p.name, p.codename, p.price, p.discount)
-	);
+  for (let i = 0; i < productlist.length; i++) {
+    let p = productlist[i];
+    table.products.push(
+      new Product(i, p.name, p.codename, p.price, p.discount)
+    );
   }
 
   insertprod.html.button.addEventListener('click',

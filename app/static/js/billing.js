@@ -24,7 +24,7 @@ function Row(sno) {
     remove: sel('input[name=remove-row]')
   };
   this.html.tr.setAttribute('sno', sno);
-  this.sno = sno;
+  this.sno = sno + 1;
   this.price = 0;
   this.discount = 0;
   this.netrate = 0;
@@ -89,9 +89,9 @@ Row.prototype = newLiveElement({
       node: undefined
     }
   },
-  calcRow: function(withdiscount) {
+  calcRow: function (withdiscount) {
     if (withdiscount) {
-      this.netrate = this.price * (1 - (this.discount/100));
+      this.netrate = this.price * (1 - (this.discount / 100));
     } else {
       this.discount = 100 * (this.price - this.netrate) / this.price;
     }
@@ -201,7 +201,7 @@ const bill = newLiveElement({
   },
   rows: Array(),
   will_overwrite: false,
-  calcTotals: function() {
+  calcTotals: function () {
     let total = 0.0;
     let nettotal = 0.0;
     this.rows.forEach((row) => {
@@ -227,45 +227,45 @@ function newRow() {
   return row;
 }
 
-function rowChanged() {
+function rowChanged(event) {
   let row = event.currentTarget;
   let sno = +row.getAttribute('sno');
   row = bill.rows[sno];
   let name = event.target.getAttribute('name');
   if (name === 'purchase_name') {
-	let val = event.target.value;
-	if (products.hasOwnProperty(val)) {
-	  let p = products[val];
+    let val = event.target.value;
+    if (products.hasOwnProperty(val)) {
+      let p = products[val];
       row.codename = p.codename;
       row.price = p.price;
       row.discount = p.discount;
       row.qty = 1;
       row.calcRow(true);
-	}
+    }
   }
   else if (name === 'purchase_codename') {
-	let val = event.target.value;
-	if (codenames.hasOwnProperty(val)) {
-	  let p = products[codenames[val]];
+    let val = event.target.value;
+    if (codenames.hasOwnProperty(val)) {
+      let p = products[codenames[val]];
       row.name = p.name;
       row.price = p.price;
       row.discount = p.discount;
       row.qty = 1;
       row.calcRow(true);
-	}
+    }
   }
   else if (name === 'purchase_price') {
-	let val = event.target.value;
+    let val = event.target.value;
     row.price = val;
     row.calcRow(true);
   }
   else if (name === 'purchase_discount') {
-	let val = event.target.value;
+    let val = event.target.value;
     row.discount = val;
     row.calcRow(true);
   }
   else if (name === 'purchase_qty') {
-	let val = event.target.value;
+    let val = event.target.value;
     row.qty = val;
     row.calcRow(true);
   }
@@ -279,12 +279,12 @@ function rowChanged() {
 function removeRow(event) {
   let target = event.target;
   if (target.getAttribute('name') === 'remove-row') {
-	let sno = +event.currentTarget.getAttribute('sno');
+    let sno = +event.currentTarget.getAttribute('sno');
     let row = bill.rows[sno];
     row.html.tr.remove();
     bill.rows.splice(sno, 1);
-    for (let i=sno; i<bill.rows.length; i++) {
-      bill.rows[i].sno = i;
+    for (let i = sno; i < bill.rows.length; i++) {
+      bill.rows[i].sno = i+1;
       bill.rows[i].html.tr.setAttribute('sno', i);
     }
     bill.calcTotals();
@@ -323,19 +323,19 @@ function newBill(force) {
 
 function carryoutSave() {
   let request = {
-	overwrite: bill.will_overwrite,
-	billno: bill.billinfo.id,
-	customer_name: bill.customer.name,
-	customer_mobile: bill.customer.mobile,
-	date: (new Date()).toISOString(),
-	freightcharges: bill.totals.freightcharges,
-	deposited: bill.totals.deposited,
-	total: bill.totals.total,
-	purchases : []
+    overwrite: bill.will_overwrite,
+    billno: bill.billinfo.id,
+    customer_name: bill.customer.name,
+    customer_mobile: bill.customer.mobile,
+    date: (new Date()).toISOString(),
+    freightcharges: bill.totals.freightcharges,
+    deposited: bill.totals.deposited,
+    total: bill.totals.total,
+    purchases: []
   };
-  for (let i=0; i<bill.rows.length; i++) {
+  for (let i = 0; i < bill.rows.length; i++) {
     let row = bill.rows[i];
-	request.purchases.push({
+    request.purchases.push({
       name: row.name,
       price: row.price,
       discount: row.discount,
@@ -344,40 +344,40 @@ function carryoutSave() {
   }
 
   fetch('/billing/api/save', {
-	method: 'POST',
-	headers: {
-	  'Content-Type': 'application/json'
-	},
-	body: JSON.stringify(request)
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(request)
   }).then(
-	response => {
-	  if (!response.ok) {
-		return response.json();
-	  }
-  }).then(
-	data => {
-	  if (data === undefined) {
-		// save complete
-		bill.will_overwrite = true;
-	  } else {
-		window.alert(data.errormsg);
-	  }
-      bill.ribbon.html.savebill.disabled = false;
-  });
+    response => {
+      if (!response.ok) {
+        return response.json();
+      }
+    }).then(
+      data => {
+        if (data === undefined) {
+          // save complete
+          bill.will_overwrite = true;
+        } else {
+          window.alert(data.errormsg);
+        }
+        bill.ribbon.html.savebill.disabled = false;
+      });
 }
 
 
 function saveBill() {
   bill.ribbon.html.savebill.disabled = true;
   if (bill.will_overwrite) {
-	if (window.confirm('You are about to overwrite an already saved bill with this bill no, overwrite?')) {
-	  carryoutSave();
-	} else {
-	  bill.ribbon.html.savebill.disabled = false;
-	}
+    if (window.confirm('You are about to overwrite an already saved bill with this bill no, overwrite?')) {
+      carryoutSave();
+    } else {
+      bill.ribbon.html.savebill.disabled = false;
+    }
   }
   else {
-	carryoutSave();
+    carryoutSave();
   }
 }
 
@@ -387,13 +387,13 @@ function loadBill(data) {
   bill.totals.extradiscount = 0;
   bill.totals.freightcharges = 0;
   bill.totals.deposited = 0;
-  for (let i=0; i<data.purchases.length; i++) {
-	let p = data.purchases[i];
+  for (let i = 0; i < data.purchases.length; i++) {
+    let p = data.purchases[i];
     let row = newRow();
-	row.name = p.name;
-	row.price = p.price;
-	row.discount = p.discount;
-	row.qty = p.qty;
+    row.name = p.name;
+    row.price = p.price;
+    row.discount = p.discount;
+    row.qty = p.qty;
     row.calcRow(true);
   }
 
@@ -412,12 +412,12 @@ function loadBill(data) {
 }
 
 function setupPage(productList) {
-  for (let i=0; i<productList.length; i++) {
-	let p = productList[i];
-	products[p.name] = p;
-	let opt = document.createElement('option');
-	opt.setAttribute('value', p.name);
-	products_datalist.append(opt);
+  for (let i = 0; i < productList.length; i++) {
+    let p = productList[i];
+    products[p.name] = p;
+    let opt = document.createElement('option');
+    opt.setAttribute('value', p.name);
+    products_datalist.append(opt);
 
     if (p.codename != null) {
       codenames[p.codename] = p.name;
@@ -451,11 +451,11 @@ if (url.searchParams.has('billno')) {
   // Load an already existing bill
   let billno = url.searchParams.get('billno');
   fetch(`/bills/api/bill/${encodeURIComponent(billno)}`)
-  .then(
-	response => response.json()
-  ).then(
-	data => loadBill(data)
-  );
+    .then(
+      response => response.json()
+    ).then(
+      data => loadBill(data)
+    );
 }
 else {
   newBill(true);

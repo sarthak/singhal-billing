@@ -71,11 +71,11 @@
           <th class="dont-print">Code Name</th>
           <th>S. No.</th>
           <th>Item Name</th>
+          <th>Qty</th>
           <th>Price (&#x20B9;)</th>
+          <th>Total (&#x20B9;)</th>
           <th>Discount (%)</th>
           <th>Net Rate (&#x20B9;)</th>
-          <th>Qty</th>
-          <th>Total (&#x20B9;)</th>
           <th>Net Total (&#x20B9;)</th>
         </tr>
       </thead>
@@ -83,18 +83,18 @@
         <tr id="bottom-row" class="sub-row">
           <td class="dont-print"></td>
           <td colspan=2><input type="button" value="Add New" id="addnewrow-button" class="dont-print"/></td>
-          <td>Discount &#x20B9;</td>
-          <td id="discounttotal"></td>
-          <td colspan=2>Sub-Total &#x20B9;</td>
+          <td colspan=2>Sum &#x20B9;</td>
           <td id="subtotal"></td>
+          <td id="discounttotal"></td>
+		  <td></td>
           <td id="subnettotal"></td>
         </tr>
         <tr class="sub-row">
           <td class="dont-print"></td>
-          <td colspan=3>Extra Discount &#x20B9;</td>
+          <td colspan=5>Extra Discount &#x20B9;</td>
           <td><input id="extradiscount" type="number"
             class="numeric" min="0" value="0" step="0.001"/></td>
-          <td colspan=3>Less Discount &#x20B9;</td>
+          <td>Final &#x20B9;</td>
           <td id="subtotallessdiscount"></td>
         </tr>
         <tr class="sub-row">
@@ -127,11 +127,11 @@
 		<td class="dont-print"><input name="purchase_codename" list="codenames-available"/></td>
 		<td><span name="purchase_sno"></span></td>
 		<td><input name="purchase_name" type="text" list="products-available"/></td>
+		<td><input name="purchase_qty" type="number" min="1" step="1" class="numeric"/></td>
 		<td><input name="purchase_price" type="number" min="1" step="0.1" class="numeric"/></td>
+		<td><span name="purchase_total"></span></td>
 		<td><input name="purchase_discount" type="number" min="0" max="100" step="0.01" class="numeric"/></td>
 		<td><input name="purchase_netrate" type="number" min="0" step="0.01" class="numeric"/></td>
-		<td><input name="purchase_qty" type="number" min="1" step="1" class="numeric"/></td>
-		<td><span name="purchase_total"></span></td>
 		<td><span name="purchase_nettotal"></span></td>
 		<td class="dont-print"><input type="button" name="remove-row" value="Remove"/></td>
 	  </tr>

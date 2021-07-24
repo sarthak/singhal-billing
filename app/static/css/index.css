@@ -61,4 +61,6 @@
 
 .sub-row td {
   text-align: right;
+  font-weight: bold;
+  font-style: italic;
 }

@@ -12,52 +12,52 @@ const backuprow_template = elem('#row-template');
 const backup_table = elem('#backup-table').tBodies[0];
 
 fetch('/manage/api/dbinfo')
-.then(response => response.json())
-.then(data => {
-  if (data.hasOwnProperty('errormsg'))
-	window.alert(data.errormsg);
-  else {
-	dblocation.value = data.location;
-	dbsize.value = data.size;
-	dbhealth.value = data.health;
-	backuplocation.value = data.backuplocation;
-  }
-});
+  .then(response => response.json())
+  .then(data => {
+    if (data.hasOwnProperty('errormsg'))
+      window.alert(data.errormsg);
+    else {
+      dblocation.value = data.location;
+      dbsize.value = data.size;
+      dbhealth.value = data.health;
+      backuplocation.value = data.backuplocation;
+    }
+  });
 
 fetch('/manage/api/list')
-.then(response => response.json())
-.then(data => {
-  data.forEach((backup) => {
-    addBackupRow(backup);
+  .then(response => response.json())
+  .then(data => {
+    data.forEach((backup) => {
+      addBackupRow(backup);
+    });
   });
-});
 
 backupbutton.addEventListener('click',
   () => {
-	fetch('/manage/api/backup', {
-	  method: 'POST',
-	  headers: {
-		'Content-Type': 'application/json'
-	  },
-	  body: JSON.stringify({
-		name: backupto.value
-	  })
-	}).then(
-	  response => {
-		if (response.ok)
-		  return undefined;
-		else
-		  return response.json();
-	  }
-	).then(
-	  data => {
-		if (data === undefined) {
-		  window.location.reload();
-		} else {
-		  window.alert(data.errormsg);
-		}
-	  }
-	);
+    fetch('/manage/api/backup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: backupto.value
+      })
+    }).then(
+      response => {
+        if (response.ok)
+          return undefined;
+        else
+          return response.json();
+      }
+    ).then(
+      data => {
+        if (data === undefined) {
+          window.location.reload();
+        } else {
+          window.alert(data.errormsg);
+        }
+      }
+    );
   }
 );
 
